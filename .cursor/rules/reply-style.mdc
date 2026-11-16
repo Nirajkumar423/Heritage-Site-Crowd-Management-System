@@ -1,0 +1,18 @@
+---
+description: Short replies. Ask when unclear. Look up facts on the web.
+alwaysApply: true
+---
+
+# Replies and research
+
+User facing replies follow these limits.
+
+- A paragraph is at most 3 lines.
+- Do not use a hyphen, en dash, or em dash in prose. Periods instead.
+- Use very few commas. Short sentences.
+- Stay concrete. Name the file, score, or step. Skip filler.
+- Code, file paths, URLs, and commands keep their real spelling.
+
+If a requirement, route, number, or product choice is missing, ask. Do not fill the gap.
+
+For anything outside this repo, search the web before answering. That includes library behavior, API shape, scores, and current docs. Do not use memory or old chats as the source. For this repo, read the code.

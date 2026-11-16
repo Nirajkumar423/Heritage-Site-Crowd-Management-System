@@ -1,0 +1,67 @@
+---
+description: Professional working UI. Copy a given image or code as-is and only swap theme color. Otherwise look up Mobbin. Responsive, complete, and readable.
+alwaysApply: true
+---
+
+# Professional UI
+
+Applies whenever UI is created or changed. Screens, components, layouts, mockups, and generated pages. Web and mobile. "Generate UI" always means this rule.
+
+## When a UI image or code is given
+
+If the user attaches a screenshot, mock, or code for a screen, reproduce that UI. Skip Mobbin for that screen. Do not redesign it.
+
+Copy these from the reference. Do not substitute a project default or a nearby value.
+
+- Font family, font size, font weight, line height, and letter spacing
+- Spacing, radius, shadow, border, and alignment
+- Box and control hover, focus, and press effects
+- Layout, hierarchy, and density
+
+Change color only. Map fills, text, borders, and accents onto the existing theme tokens. Do not copy the reference palette. Do not invent a new palette.
+
+```tsx
+// Bad: reference says 13px and a 2px lift on hover, shipped as a theme default
+<Card className="text-base hover:bg-muted" />
+
+// Good: same type and hover as the reference, color from theme tokens
+<Card className="text-[13px] transition-transform hover:-translate-y-0.5 hover:shadow-md" />
+```
+
+## Look up Mobbin first
+
+Skip this section when the user already gave a UI image or code.
+
+Search the `user-Mobbin` MCP tools and study the preview images before writing UI. Then build.
+
+- App or phone screens: `search_screens` with `platform: ios`.
+- Web pages: `search_screens` with `platform: web`. A single band (hero, pricing, footer) uses `search_sections`.
+- A multi-step journey: `search_flows`.
+- Set `output_destination` to `code`. One plain-language query for the screen being built.
+- Match layout, spacing, hierarchy, and density of a strong real product. Do not copy another brand's name, logo, or assets.
+- If Mobbin fails, say so once, then still meet the bar below.
+
+## Shipped quality
+
+The result must look and work like a finished product. When a reference UI was given, keep its type, spacing, and hover. This section does not override that.
+
+- Responsive from phone through desktop. No overflow, clipped text, or layout-caused horizontal scroll.
+- Icons come from the project icon set and render. Images load or show a real fallback. No broken boxes, missing glyphs, or leftover placeholders.
+- Links and buttons do the job the screen claims. No dead `#` links. No control that does nothing on a screen meant to work.
+- Type, contrast, and spacing stay comfortable to read. No neon-on-white, tiny gray text, or cramped tap targets.
+- Adult product tone. No cartoon mascots, comic fonts, or playful decoration unless this product already uses them.
+- Loading, empty, and error states are designed. Use the existing theme tokens. Do not invent a new palette per screen.
+
+## Before calling it done
+
+Use the screen. Confirm images, icons, and links. Check a narrow viewport and a wide one. Fix anything broken or odd before finishing.
+
+```tsx
+// Bad: placeholder art, a dead link, one fixed width
+<img src="/placeholder.png" />
+<a href="#">Book</a>
+
+// Good: a real asset with a fallback, a real route, a fluid layout
+<img src={stay.photoUrl} alt={stay.name} onError={showStayFallback} />
+<Link href={`/stays/${stay.id}`}>Book</Link>
+```

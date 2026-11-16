@@ -1,0 +1,12 @@
+---
+description: Use npm for every install, script, and dev server. Do not use pnpm.
+alwaysApply: true
+---
+
+# Package manager
+
+Use npm in this workspace. Do not run pnpm.
+
+- Install and add packages with `npm install` and `npm install <pkg>`.
+- Run scripts with `npm run <script>`, including `npm run dev`.
+- Do not add `pnpm-lock.yaml` or a `packageManager` field that names pnpm.

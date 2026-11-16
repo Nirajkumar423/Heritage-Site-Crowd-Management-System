@@ -1,0 +1,35 @@
+---
+description: Run Lighthouse on mobile and desktop only when the user asks to check Lighthouse. Otherwise skip it.
+alwaysApply: true
+---
+
+# Lighthouse only when asked
+
+Run this only when the user asks to check Lighthouse. Otherwise ignore this rule. Do not run it after a visible change on your own.
+
+The user provides the page route. Run Lighthouse only on that route. Do not pick a recently changed page. Do not pick another page. If the route is missing, ask. Skip this for backend, SQL, docs, and rules.
+
+1. Use the given page on `http://localhost:3000` plus the provided route. Measure the production server. `npm run dev` does not minify JavaScript, so its performance score is not the result. Stop the process on port 3000. Build and start the production app for the project that serves that page. Do not stop after reporting a score. A score of 90 or below is unfinished work.
+2. Run both form factors. Commands are from the Lighthouse CLI docs (`https://www.npmjs.com/package/lighthouse`). Mobile is the default. Desktop uses `--preset=desktop`.
+
+Mobile:
+
+```
+npx --yes lighthouse "<given page url>" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path="$env:TEMP\lighthouse-mobile.json" --quiet --chrome-flags="--headless"
+```
+
+Desktop:
+
+```
+npx --yes lighthouse "<given page url>" --preset=desktop --only-categories=performance,accessibility,best-practices,seo --output=json --output-path="$env:TEMP\lighthouse-desktop.json" --quiet --chrome-flags="--headless"
+```
+
+3. In each JSON, read `categories.performance.score`, `categories.accessibility.score`, `categories.best-practices.score`, and `categories.seo.score`. Multiply each by 100.
+4. Compare with the last run for that same URL and form factor when one exists. Report all eight scores. Call out any score that dropped. If there is no earlier run for that form factor, say there is no baseline. Do not invent one.
+5. If any score is 90 or below, fix that page only and run both commands again. Repeat until every score is above 90 on mobile and on desktop. Use audits in that JSON whose `score` is below 1. Fix the audits that pull a category to 90 or below. Real fixes only. Do not hide content, fake labels, or change product behavior the user did not ask for.
+6. If a score stays at 90 or below after a real fix, stop and say which form factor, category, score, and audit remain. Do not claim the target is met.
+7. Do not claim the page is intact if Lighthouse fails. Say what failed.
+8. Leave both JSON files in the temp folder. Do not commit them.
+9. Do not alter any design or user flow while working on Lighthouse scores. Keep layout, visuals, copy, navigation, and interaction paths unchanged. Prefer performance and a11y fixes that leave the product looking and behaving the same. If a score fix would require a design or flow change, stop and ask first.
+
+Lighthouse does not replace clicking through the given page in the browser. Do both.
