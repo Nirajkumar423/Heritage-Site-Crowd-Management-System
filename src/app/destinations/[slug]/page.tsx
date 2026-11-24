@@ -187,7 +187,10 @@ async function DestinationDetailContent({
           <aside className="space-y-5 lg:sticky lg:top-[calc(var(--nav-height)+1rem)] lg:self-start">
             <LiveStatsPanel destination={destination} stats={stats} />
             <Suspense fallback={<BookingFallback />}>
-              <DestinationBooking destinationId={destination.id} />
+              <DestinationBooking
+                destinationId={destination.id}
+                destinationName={destination.name}
+              />
             </Suspense>
           </aside>
         </div>

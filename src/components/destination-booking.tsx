@@ -5,10 +5,12 @@ import type { HeritageTimeSlot } from "@/lib/types";
 
 type DestinationBookingProps = {
   destinationId: string;
+  destinationName?: string;
 };
 
 export async function DestinationBooking({
   destinationId,
+  destinationName,
 }: DestinationBookingProps) {
   await connection();
 
@@ -27,6 +29,7 @@ export async function DestinationBooking({
       dates={dates}
       initialDate={dates[0]}
       slotsByDate={slotsByDate}
+      destinationName={destinationName}
     />
   );
 }
