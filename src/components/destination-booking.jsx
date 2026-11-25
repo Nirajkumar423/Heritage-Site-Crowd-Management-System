@@ -5,12 +5,13 @@ import { availableSlotDates, getTimeSlots } from "@/lib/heritage";
 export async function DestinationBooking({
   destinationId,
   destinationName,
+  destination,
 }) {
   await connection();
 
   const dates = availableSlotDates(7);
   const slotGroups = await Promise.all(
-    dates.map((date) => getTimeSlots(destinationId, date)),
+    dates.map((date) => getTimeSlots(destinationId, date, destination)),
   );
 
   const slotsByDate = {};
@@ -24,6 +25,7 @@ export async function DestinationBooking({
       initialDate={dates[0]}
       slotsByDate={slotsByDate}
       destinationName={destinationName}
+      destination={destination}
     />
   );
 }

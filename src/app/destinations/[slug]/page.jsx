@@ -71,7 +71,7 @@ async function DestinationDetailContent({ params }) {
 
   const [tickets, stats] = await Promise.all([
     getTickets(destination.id),
-    getLatestEntryStats(destination.id),
+    getLatestEntryStats(destination.id, destination),
   ]);
 
   const gallery = [
@@ -190,6 +190,7 @@ async function DestinationDetailContent({ params }) {
               <DestinationBooking
                 destinationId={destination.id}
                 destinationName={destination.name}
+                destination={destination}
               />
             </Suspense>
           </aside>
