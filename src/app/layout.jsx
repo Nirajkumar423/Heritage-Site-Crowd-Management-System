@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { DM_Sans, Libre_Baskerville } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -16,7 +15,7 @@ const display = Libre_Baskerville({
   weight: ["400", "700"],
 });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: {
     default: "Darshan | Smart heritage tourism",
     template: "%s | Darshan",
@@ -25,7 +24,7 @@ export const metadata: Metadata = {
     "Plan visits to monuments, museums, and heritage sites with history, tickets, crowd levels, and live entry stats.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }) {
   return (
     <html
       lang="en"

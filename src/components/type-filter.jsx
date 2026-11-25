@@ -8,11 +8,7 @@ const filters = [
   { value: "heritage_site", label: "Heritage" },
 ];
 
-type TypeFilterProps = {
-  active: string;
-};
-
-export function TypeFilter({ active }: TypeFilterProps) {
+export function TypeFilter({ active }) {
   return (
     <div className="flex flex-wrap gap-2" role="list" aria-label="Site type">
       {filters.map((filter) => {

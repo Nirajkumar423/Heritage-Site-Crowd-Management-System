@@ -2,17 +2,8 @@ import Link from "next/link";
 import { CrowdBadge } from "@/components/crowd-badge";
 import { SiteImage } from "@/components/site-image";
 import { formatInr, siteTypeLabel } from "@/lib/format";
-import type { DestinationCard as DestinationCardType } from "@/lib/types";
 
-type DestinationCardProps = {
-  destination: DestinationCardType;
-  featured?: boolean;
-};
-
-export function DestinationCard({
-  destination,
-  featured = false,
-}: DestinationCardProps) {
+export function DestinationCard({ destination, featured = false }) {
   return (
     <Link
       href={`/destinations/${destination.slug}`}

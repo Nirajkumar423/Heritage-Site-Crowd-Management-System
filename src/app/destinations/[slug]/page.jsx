@@ -13,18 +13,12 @@ import {
 } from "@/lib/heritage";
 import { formatTime, siteTypeLabel } from "@/lib/format";
 
-type DestinationDetailPageProps = {
-  params: Promise<{ slug: string }>;
-};
-
 export async function generateStaticParams() {
   const destinations = await getDestinations();
   return destinations.map((destination) => ({ slug: destination.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: DestinationDetailPageProps) {
+export async function generateMetadata({ params }) {
   const { slug } = await params;
   const destination = await getDestinationBySlug(slug);
   if (!destination) {
@@ -59,9 +53,7 @@ function PageFallback() {
   );
 }
 
-async function DestinationDetailContent({
-  params,
-}: DestinationDetailPageProps) {
+async function DestinationDetailContent({ params }) {
   const { slug } = await params;
   const destination = await getDestinationBySlug(slug);
 
@@ -199,9 +191,7 @@ async function DestinationDetailContent({
   );
 }
 
-export default function DestinationDetailPage(
-  props: DestinationDetailPageProps,
-) {
+export default function DestinationDetailPage(props) {
   return (
     <Suspense fallback={<PageFallback />}>
       <DestinationDetailContent {...props} />

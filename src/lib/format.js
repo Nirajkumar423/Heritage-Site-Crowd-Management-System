@@ -1,6 +1,4 @@
-import type { CrowdLevel, SiteType } from "@/lib/types";
-
-export function formatInr(amount: number) {
+export function formatInr(amount) {
   if (amount === 0) return "Free";
   return new Intl.NumberFormat("en-IN", {
     style: "currency",
@@ -9,7 +7,7 @@ export function formatInr(amount: number) {
   }).format(amount);
 }
 
-export function formatTime(value: string) {
+export function formatTime(value) {
   const [hoursRaw, minutesRaw] = value.slice(0, 5).split(":");
   const hours = Number(hoursRaw);
   const minutes = Number(minutesRaw);
@@ -18,7 +16,7 @@ export function formatTime(value: string) {
   return `${hour12}:${minutes.toString().padStart(2, "0")} ${period}`;
 }
 
-export function formatDateLabel(value: string) {
+export function formatDateLabel(value) {
   const [year, month, day] = value.split("-").map(Number);
   const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const months = [
@@ -39,7 +37,7 @@ export function formatDateLabel(value: string) {
   return `${weekday}, ${day} ${months[month - 1]}`;
 }
 
-export function siteTypeLabel(type: SiteType) {
+export function siteTypeLabel(type) {
   switch (type) {
     case "heritage_site":
       return "Heritage site";
@@ -54,7 +52,7 @@ export function siteTypeLabel(type: SiteType) {
   }
 }
 
-export function crowdLabel(level: CrowdLevel) {
+export function crowdLabel(level) {
   switch (level) {
     case "low":
       return "Quiet";
@@ -69,7 +67,7 @@ export function crowdLabel(level: CrowdLevel) {
   }
 }
 
-export function crowdTone(level: CrowdLevel) {
+export function crowdTone(level) {
   switch (level) {
     case "low":
       return "var(--crowd-low)";
@@ -84,7 +82,7 @@ export function crowdTone(level: CrowdLevel) {
   }
 }
 
-export function slotFillPercent(booked: number, capacity: number) {
+export function slotFillPercent(booked, capacity) {
   if (capacity <= 0) return 0;
   return Math.min(100, Math.round((booked / capacity) * 100));
 }

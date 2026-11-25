@@ -7,57 +7,31 @@ import {
   formatTime,
   slotFillPercent,
 } from "@/lib/format";
-import type { HeritageTimeSlot } from "@/lib/types";
-
-export type FakeReservation = {
-  bookingId: string;
-  destinationName: string;
-  slotId: string;
-  date: string;
-  startTime: string;
-  endTime: string;
-  expectedCrowd: string;
-  visitorName: string;
-  contact: string;
-  guestCount: number;
-  category: string;
-  bookedAt: string;
-};
-
-type SlotPickerProps = {
-  dates: string[];
-  initialDate: string;
-  slotsByDate: Record<string, HeritageTimeSlot[]>;
-  destinationName?: string;
-};
 
 export function SlotPicker({
   dates,
   initialDate,
   slotsByDate,
   destinationName = "Heritage Destination",
-}: SlotPickerProps) {
+}) {
   const [selectedDate, setSelectedDate] = useState(initialDate);
-  const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
+  const [selectedSlotId, setSelectedSlotId] = useState(null);
 
   // Reservation Form State
-  const [guestCount, setGuestCount] = useState<number>(2);
-  const [visitorName, setVisitorName] = useState<string>("Aarav Sharma");
-  const [contact, setContact] = useState<string>("aarav.sharma@example.com");
-  const [category, setCategory] = useState<string>("Domestic / Resident");
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [guestCount, setGuestCount] = useState(2);
+  const [visitorName, setVisitorName] = useState("Aarav Sharma");
+  const [contact, setContact] = useState("aarav.sharma@example.com");
+  const [category, setCategory] = useState("Domestic / Resident");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   // Status message for notification / toast banner
-  const [statusMessage, setStatusMessage] = useState<{
-    type: "success" | "info" | "warning";
-    text: string;
-  } | null>(null);
+  const [statusMessage, setStatusMessage] = useState(null);
 
   // Active reservation store
-  const [reservation, setReservation] = useState<FakeReservation | null>(null);
-  const [copiedCode, setCopiedCode] = useState<boolean>(false);
-  const [downloadSuccess, setDownloadSuccess] = useState<boolean>(false);
+  const [reservation, setReservation] = useState(null);
+  const [copiedCode, setCopiedCode] = useState(false);
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
 
   const slots = useMemo(
     () => slotsByDate[selectedDate] ?? [],
@@ -87,7 +61,7 @@ export function SlotPicker({
       const randomCode = Math.floor(100000 + Math.random() * 900000);
       const bookingId = `STP-${randomCode}`;
 
-      const newReservation: FakeReservation = {
+      const newReservation = {
         bookingId,
         destinationName,
         slotId: selectedSlot.id,

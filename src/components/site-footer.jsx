@@ -15,17 +15,17 @@ export function SiteFooter() {
           <Link href="/destinations" className="hover:text-surface">
             Destinations
           </Link>
-          <Link
-            href="/destinations/taj-mahal"
-            className="hover:text-surface"
-          >
+          <Link href="/destinations/taj-mahal" className="hover:text-surface">
             Taj Mahal
           </Link>
-          <Link
-            href="/destinations?type=museum"
-            className="hover:text-surface"
-          >
+          <Link href="/destinations?type=museum" className="hover:text-surface">
             Museums
+          </Link>
+          <Link href="/account" className="hover:text-surface">
+            Account
+          </Link>
+          <Link href="/login" className="hover:text-surface">
+            Sign in
           </Link>
         </div>
       </div>

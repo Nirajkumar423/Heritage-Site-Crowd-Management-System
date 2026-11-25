@@ -1,11 +1,6 @@
 import { formatInr } from "@/lib/format";
-import type { HeritageTicketType } from "@/lib/types";
 
-type TicketListProps = {
-  tickets: HeritageTicketType[];
-};
-
-export function TicketList({ tickets }: TicketListProps) {
+export function TicketList({ tickets }) {
   if (tickets.length === 0) {
     return (
       <p className="text-sm text-ink-muted">

@@ -3,21 +3,13 @@ import { DestinationCard } from "@/components/destination-card";
 import { TypeFilter } from "@/components/type-filter";
 import { getDestinations } from "@/lib/heritage";
 
-type DestinationsPageProps = {
-  searchParams: Promise<{ type?: string }>;
-};
-
 export const metadata = {
   title: "Destinations",
   description:
     "Browse monuments, forts, museums, and heritage sites with live crowd levels and ticket prices.",
 };
 
-async function DestinationResults({
-  searchParams,
-}: {
-  searchParams: Promise<{ type?: string }>;
-}) {
+async function DestinationResults({ searchParams }) {
   const params = await searchParams;
   const type = params.type ?? "all";
   const destinations = await getDestinations(type);
@@ -64,9 +56,7 @@ function ResultsFallback() {
   );
 }
 
-export default function DestinationsPage({
-  searchParams,
-}: DestinationsPageProps) {
+export default function DestinationsPage({ searchParams }) {
   return (
     <section className="section">
       <div className="container">

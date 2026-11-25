@@ -1,18 +1,6 @@
 import { CrowdBadge } from "@/components/crowd-badge";
-import type { HeritageDestination, HeritageEntryStats } from "@/lib/types";
 
-type LiveStatsPanelProps = {
-  destination: HeritageDestination;
-  stats: HeritageEntryStats | null;
-};
-
-function Stat({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
+function Stat({ label, value }) {
   return (
     <div className="border-t border-line pt-3">
       <p className="text-xs uppercase tracking-[0.12em] text-ink-muted">
@@ -23,7 +11,7 @@ function Stat({
   );
 }
 
-export function LiveStatsPanel({ destination, stats }: LiveStatsPanelProps) {
+export function LiveStatsPanel({ destination, stats }) {
   const occupancy = stats
     ? Math.min(
         100,

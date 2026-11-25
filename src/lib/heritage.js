@@ -1,30 +1,23 @@
 import { cacheLife } from "next/cache";
 import { createPublicClient } from "@/lib/supabase/public";
-import type {
-  DestinationCard,
-  HeritageDestination,
-  HeritageEntryStats,
-  HeritageTicketType,
-  HeritageTimeSlot,
-} from "@/lib/types";
 
 function useHeritageCache() {
   cacheLife("minutes");
 }
 
-function asGallery(value: unknown): string[] {
+function asGallery(value) {
   if (Array.isArray(value)) {
-    return value.filter((item): item is string => typeof item === "string");
+    return value.filter((item) => typeof item === "string");
   }
   return [];
 }
 
-function mapDestination(row: Record<string, unknown>): HeritageDestination {
+function mapDestination(row) {
   return {
     id: String(row.id),
     slug: String(row.slug),
     name: String(row.name),
-    site_type: row.site_type as HeritageDestination["site_type"],
+    site_type: row.site_type,
     city: String(row.city),
     state: String(row.state),
     country: String(row.country),
@@ -45,9 +38,7 @@ function mapDestination(row: Record<string, unknown>): HeritageDestination {
   };
 }
 
-export async function getDestinations(
-  siteType?: string,
-): Promise<DestinationCard[]> {
+export async function getDestinations(siteType) {
   "use cache";
   useHeritageCache();
 
@@ -82,17 +73,14 @@ export async function getDestinations(
       .in("destination_id", ids),
   ]);
 
-  const latestByDestination = new Map<string, HeritageEntryStats>();
+  const latestByDestination = new Map();
   for (const row of stats ?? []) {
     if (!latestByDestination.has(row.destination_id)) {
-      latestByDestination.set(
-        row.destination_id,
-        row as HeritageEntryStats,
-      );
+      latestByDestination.set(row.destination_id, row);
     }
   }
 
-  const lowestPrice = new Map<string, number>();
+  const lowestPrice = new Map();
   for (const ticket of tickets ?? []) {
     const current = lowestPrice.get(ticket.destination_id);
     if (current === undefined || ticket.price_inr < current) {
@@ -110,7 +98,7 @@ export async function getDestinations(
   });
 }
 
-export async function getDestinationBySlug(slug: string) {
+export async function getDestinationBySlug(slug) {
   "use cache";
   useHeritageCache();
 
@@ -130,9 +118,7 @@ export async function getDestinationBySlug(slug: string) {
   return mapDestination(data);
 }
 
-export async function getTickets(
-  destinationId: string,
-): Promise<HeritageTicketType[]> {
+export async function getTickets(destinationId) {
   "use cache";
   useHeritageCache();
 
@@ -148,13 +134,10 @@ export async function getTickets(
     return [];
   }
 
-  return data as HeritageTicketType[];
+  return data;
 }
 
-export async function getTimeSlots(
-  destinationId: string,
-  slotDate: string,
-): Promise<HeritageTimeSlot[]> {
+export async function getTimeSlots(destinationId, slotDate) {
   "use cache";
   useHeritageCache();
 
@@ -171,12 +154,10 @@ export async function getTimeSlots(
     return [];
   }
 
-  return data as HeritageTimeSlot[];
+  return data;
 }
 
-export async function getLatestEntryStats(
-  destinationId: string,
-): Promise<HeritageEntryStats | null> {
+export async function getLatestEntryStats(destinationId) {
   "use cache";
   useHeritageCache();
 
@@ -194,7 +175,7 @@ export async function getLatestEntryStats(
     return null;
   }
 
-  return data as HeritageEntryStats;
+  return data;
 }
 
 export async function getFeaturedDestinations() {
@@ -209,7 +190,7 @@ export async function getFeaturedDestinations() {
   ];
   const featured = priority
     .map((slug) => all.find((item) => item.slug === slug))
-    .filter((item): item is DestinationCard => Boolean(item));
+    .filter(Boolean);
 
   if (featured.length >= 4) {
     return featured.slice(0, 4);
@@ -222,7 +203,7 @@ export async function getFeaturedDestinations() {
 }
 
 export function availableSlotDates(days = 7, from = new Date()) {
-  const dates: string[] = [];
+  const dates = [];
   for (let i = 0; i < days; i += 1) {
     const date = new Date(
       Date.UTC(from.getUTCFullYear(), from.getUTCMonth(), from.getUTCDate() + i),

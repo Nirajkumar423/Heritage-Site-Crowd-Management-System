@@ -166,6 +166,35 @@ img {
   background: rgba(255, 253, 249, 0.2);
 }
 
+.field-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.field-input {
+  margin-top: 0.35rem;
+  width: 100%;
+  min-height: 2.75rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.95rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 160ms ease;
+}
+
+.field-input:focus {
+  border-color: var(--accent);
+}
+
+.field-input::placeholder {
+  color: var(--ink-muted);
+}
+
 .crowd-pill {
   display: inline-flex;
   align-items: center;
