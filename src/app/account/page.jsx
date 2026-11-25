@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { AccountPanel } from "@/components/account-panel";
 import { createClient } from "@/lib/supabase/server";
@@ -7,7 +8,7 @@ export const metadata = {
   description: "Manage your Darshan visitor account.",
 };
 
-export default async function AccountPage() {
+async function AccountContent() {
   const supabase = await createClient();
   const {
     data: { user },
@@ -20,6 +21,20 @@ export default async function AccountPage() {
   const fullName =
     user.user_metadata?.full_name || user.user_metadata?.name || "";
 
+  return <AccountPanel email={user.email || ""} fullName={fullName} />;
+}
+
+function AccountFallback() {
+  return (
+    <div className="rounded-[var(--radius-lg)] border border-line bg-surface p-6 shadow-sm">
+      <div className="h-6 w-48 animate-pulse rounded bg-paper-deep" />
+      <div className="mt-4 h-10 w-full animate-pulse rounded bg-paper-deep" />
+      <div className="mt-4 h-10 w-full animate-pulse rounded bg-paper-deep" />
+    </div>
+  );
+}
+
+export default function AccountPage() {
   return (
     <section className="section !py-10 md:!py-14">
       <div className="container max-w-2xl">
@@ -31,9 +46,12 @@ export default async function AccountPage() {
           Keep your details current for bookings and e-pass contact.
         </p>
         <div className="mt-8">
-          <AccountPanel email={user.email || ""} fullName={fullName} />
+          <Suspense fallback={<AccountFallback />}>
+            <AccountContent />
+          </Suspense>
         </div>
       </div>
     </section>
   );
 }
+

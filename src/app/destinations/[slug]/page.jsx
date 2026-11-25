@@ -15,6 +15,14 @@ import { formatTime, siteTypeLabel } from "@/lib/format";
 
 export async function generateStaticParams() {
   const destinations = await getDestinations();
+  if (!destinations || destinations.length === 0) {
+    return [
+      { slug: "taj-mahal" },
+      { slug: "red-fort" },
+      { slug: "agra-fort" },
+      { slug: "national-museum-delhi" },
+    ];
+  }
   return destinations.map((destination) => ({ slug: destination.slug }));
 }
 
